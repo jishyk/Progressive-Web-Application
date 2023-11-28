@@ -88,4 +88,4 @@ For additional dependencies, please see package.json.
 
 * Github: https://github.com/jishyk/Progressive-Web-Application
 
-* Heroku: 
+* Heroku: https://floating-wildwood-04303-53cc9eb8209e.herokuapp.com/
