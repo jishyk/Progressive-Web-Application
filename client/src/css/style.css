@@ -1,4 +1,3 @@
-/* app shell CSS */
 :root {
   --primary: #31a9e1;
   --gray: #ececec;
@@ -209,3 +208,15 @@ h1 {
     font-size: 18px;
   }
 }
+/* * Add the correct display in IE 10+. */
+
+   template {
+    display: none;
+  }
+  
+  /* * Add the correct display in IE 10. */
+
+  [hidden] {
+    display: none;
+  }
+   
