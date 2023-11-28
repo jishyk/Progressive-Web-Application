@@ -47,10 +47,30 @@ const seedDb = async () => {
     localStorage.setItem('content', headerContent);
   }
 
-// Implement logic to add content to the database
+// TODO: Add logic to a method that accepts some content and adds it to the database
+
 export const putDb = async (content) => {
+  console.log('Update the database');
+
+  // Connect to the jate version 1 database.
+  const jateDb = await openDB('jate', 1);
+
+  // Create a read/write transaction on the 'jate' object store
+  const tx = jateDb.transaction('jate', 'readwrite');
+
+  // Open the 'jate' object store
+  const store = tx.objectStore('jate');
+
+  // Update the data in the object store
+  const request = store.put({ id: 1, content: content });
+
+  // Get confirmation of the request
+  const result = await request;
+  console.log('result.value', result);
+
+  return resultString;
+
 };
-console.log('Update the database');
 
 // Implement logic to get all content from the database
 export const getDb = async () => {
