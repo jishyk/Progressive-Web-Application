@@ -72,10 +72,32 @@ export const putDb = async (content) => {
 
 };
 
-// Implement logic to get all content from the database
+// TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
+  console.log('GET from the database');
+
+  // Connect to the jate version 1 database.
+  const jateDb = await openDB('jate', 1);
+
+  // Create a readonly transaction on the 'jate' object store
+  const tx = jateDb.transaction('jate', 'readonly');
+
+  // Open the 'jate' object store
+  const store = tx.objectStore('jate');
+
+  // Get all data in the database
+  const request = store.getAll();
+
+  // Get confirmation of the request
+  const result = await request;
+  console.log('result.value', result);
+
+  // Obtain the 'content' key value from the the first object in the array.
+  const resultString = result[0].content;
+
+  return resultString;
+
 };
-console.log('GET from the database');
 
 // Initialize the database
 initdb();
