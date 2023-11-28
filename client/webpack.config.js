@@ -3,6 +3,7 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
+
 module.exports = () => {
   return {
     mode: 'development',
@@ -15,52 +16,58 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
+      // Webpack plugin to generate html file and inject into bundles
       new HtmlWebpackPlugin({
-        template: './src/index.html', // assuming you have an index.html file in a src directory
-        title: 'Your Application Name'
+        template: './index.html',
+        title: 'Just Another Test Editor'
       }),
+
+      // Inject custom service worker
       new InjectManifest({
-        swSrc: './src-sw.js', // your source service worker file
-        swDest: 'service-worker.js' // the output service worker file
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
       }),
+
+      // Create manifest.json file
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: 'Your App Name',
-        short_name: 'App',
-        description: 'Your application description',
-        background_color: '#ffffff',
-        crossorigin: 'use-credentials', // can be null, use-credentials or anonymous
+        name: 'Just Another Text Editor',
+        short_name: 'JATE',
+        description: 'Browser Text Editor',
+        background_color: '#2239D5',
+        theme_color: '#D5BE22',
+        start_url: './',
+        publicPath: './',
         icons: [
           {
-            src: path.resolve('src/images/icon.png'),
-            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
           },
         ],
       }),
-      // Add other plugins here
     ],
 
     module: {
+      // define rules for css and js (mjs) loaders
       rules: [
         {
-          test: /\.css$/,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-transform-runtime'], // if you're using async/await
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
-        },
-        // Add other rules here
+        },        
       ],
     },
-    // Add other webpack config here
   };
 };

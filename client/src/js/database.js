@@ -1,18 +1,22 @@
 import { openDB } from 'idb';
 import { header } from './header';
 
+// Define function to initialize the IndexedDB database
 const initdb = async () => {
-  const db = await openDB('jate', 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains('jate')) {
-        db.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
-        console.log('jate database created');
-      }
-    },
-  });
+  console.log('Initialize the database');
 
-//  Call seedDb to seed on initialization
-  await seedDb();
+openDB('jate', 1, {
+  upgrade(db) {
+    if (db.objectStoreNames.contains('jate')) {
+      console.log('jate database already exists');
+      return;
+    }
+    db.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
+    console.log('jate database created');
+    seedDb();
+    console.log('jate database seeded');
+  },
+});
 };
 
 // Define function to seed the db with the header
@@ -38,13 +42,20 @@ const seedDb = async () => {
   return result;
 };
 
+  // Seed local storage if empty
+  if (!localStorage.getItem('content')) {
+    localStorage.setItem('content', headerContent);
+  }
+
 // Implement logic to add content to the database
 export const putDb = async (content) => {
 };
+console.log('Update the database');
 
 // Implement logic to get all content from the database
 export const getDb = async () => {
 };
+console.log('GET from the database');
 
 // Initialize the database
 initdb();
