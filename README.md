@@ -84,6 +84,9 @@ CONTEXT: Text editor web application
 The bundling of application files was facilitated by npm webpack v5.51.1.
 For additional dependencies, please see package.json.
 
+# Screenshot
+![Alt text](assets/Screenshot1.png)
+
 ## Links
 
 * Github: https://github.com/jishyk/Progressive-Web-Application
